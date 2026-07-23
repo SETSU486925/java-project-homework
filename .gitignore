@@ -1,0 +1,13 @@
+
+target/
+*.class
+
+.idea/
+*.iml
+*.xml.bak
+
+# 压缩包、系统文件
+*.zip
+*.rar
+Thumbs.db
+.DS_Store
