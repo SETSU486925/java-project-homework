@@ -1,5 +1,53 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.lzj.admin.mapper.PurchaseListMapper">
+    <select id="getMaxPurchaseNumber" resultType="java.lang.String">
+        SELECT MAX(purchase_number)
+        FROM t_purchase_list
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="list" resultType="com.lzj.admin.pojo.PurchaseList">
+
+        SELECT
+            p.*,
+            s.name AS supplierName,
+            u.user_name AS userName
+        FROM t_purchase_list p
+        LEFT JOIN t_supplier s
+            ON p.supplier_id=s.id
+        LEFT JOIN t_user u
+            ON p.user_id=u.id
+
+        <where>
+
+            <if test="query.purchaseNumber!=null and query.purchaseNumber!=''">
+                AND p.purchase_number LIKE CONCAT('%',#{query.purchaseNumber},'%')
+            </if>
+
+            <if test="query.supplierId!=null">
+                AND p.supplier_id=#{query.supplierId}
+            </if>
+
+            <if test="query.state!=null">
+                AND p.state=#{query.state}
+            </if>
+
+            <if test="query.startDate!=null and query.startDate!=''">
+                AND p.purchase_date &gt;= #{query.startDate}
+            </if>
+
+            <if test="query.endDate!=null and query.endDate!=''">
+                AND p.purchase_date &lt;= #{query.endDate}
+            </if>
+
+        </where>
+
+        ORDER BY p.id DESC
+
+    </select>
 
 </mapper>

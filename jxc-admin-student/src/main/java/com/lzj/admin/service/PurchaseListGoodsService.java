@@ -13,4 +13,8 @@ import java.util.Map;
  */
 public interface PurchaseListGoodsService extends IService<PurchaseListGoods> {
 
+	Map<String, Object> queryPurchaseListGoods(PurchaseListGoodsQuery query);
+
+	void deleteByPurchaseId(Integer purchaseId);
+
 }

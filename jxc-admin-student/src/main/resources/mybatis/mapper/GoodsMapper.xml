@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.lzj.admin.mapper.GoodsMapper">
+
+    <!-- 实体映射 -->
+    <resultMap id="GoodsMap" type="com.lzj.admin.pojo.Goods">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="inventory_quantity" property="inventoryQuantity"/>
+        <result column="min_num" property="minNum"/>
+        <result column="model" property="model"/>
+        <result column="name" property="name"/>
+        <result column="producer" property="producer"/>
+        <result column="purchasing_price" property="purchasingPrice"/>
+        <result column="selling_price" property="sellingPrice"/>
+        <result column="remarks" property="remarks"/>
+        <result column="unit" property="unit"/>
+        <result column="type_id" property="typeId"/>
+        <result column="state" property="state"/>
+        <result column="last_purchasing_price" property="lastPurchasingPrice"/>
+        <result column="is_del" property="isDel"/>
+    </resultMap>
+
+    <!-- 商品分页查询 -->
+    <select id="queryGoods" resultMap="GoodsMap">
+
+        SELECT *
+        FROM t_goods
+        WHERE is_del = 0
+
+        <if test="query.goodsName != null and query.goodsName != ''">
+            AND name LIKE '%' || #{query.goodsName} || '%'
+        </if>
+
+        <if test="query.typeId != null">
+            AND type_id = #{query.typeId}
+        </if>
+
+        <!-- 库存=0 -->
+        <if test="query.type == 1">
+            AND inventory_quantity = 0
+        </if>
+
+        <!-- 库存>0 -->
+        <if test="query.type == 2">
+            AND inventory_quantity &gt; 0
+        </if>
+
+        ORDER BY id DESC
+
+    </select>
 
 </mapper>

@@ -1,5 +1,63 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.lzj.admin.mapper.PurchaseListGoodsMapper">
+    <insert id="insertBatch">
+
+        INSERT INTO t_purchase_list_goods
+        (
+            code,
+            model,
+            name,
+            num,
+            price,
+            total,
+            unit,
+            purchase_list_id,
+            type_id,
+            goods_id
+        )
+
+        VALUES
+
+        <foreach collection="list"
+                 item="item"
+                 separator=",">
+
+            (
+            #{item.code},
+            #{item.model},
+            #{item.name},
+            #{item.num},
+            #{item.price},
+            #{item.total},
+            #{item.unit},
+            #{item.purchaseListId},
+            #{item.typeId},
+            #{item.goodsId}
+            )
+
+        </foreach>
+
+    </insert>
+    <delete id="deleteByPurchaseId">
+
+        DELETE
+        FROM t_purchase_list_goods
+        WHERE purchase_list_id=#{purchaseId}
+
+    </delete>
+
+    <!-- 查询进货商品 -->
+    <select id="queryByPurchaseId"
+            resultType="com.lzj.admin.pojo.PurchaseListGoods">
+
+        SELECT *
+        FROM t_purchase_list_goods
+        WHERE purchase_list_id=#{purchaseId}
+
+    </select>
 
 </mapper>

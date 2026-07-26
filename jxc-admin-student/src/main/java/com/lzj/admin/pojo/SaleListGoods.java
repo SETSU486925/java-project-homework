@@ -57,4 +57,6 @@ public class SaleListGoods implements Serializable {
     private Integer goodsId;
 
 
+
+
 }
