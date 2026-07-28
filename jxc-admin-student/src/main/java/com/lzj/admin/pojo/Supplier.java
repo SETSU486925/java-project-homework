@@ -2,6 +2,7 @@ package com.lzj.admin.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -14,16 +15,16 @@ import lombok.EqualsAndHashCode;
  * @author TianTian
  * @date 2022/1/18 9:58
  */
+
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_supplier")
+@TableName("T_SUPPLIER") 
 @ApiModel(value="Supplier对象", description="供应商表")
 public class Supplier implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.INPUT)
     private Integer id;
 
     @ApiModelProperty(value = "联系地址")
@@ -35,14 +36,13 @@ public class Supplier implements Serializable {
     @ApiModelProperty(value = "供应商名称")
     private String name;
 
+    @TableField(value = "\"number\"")
     @ApiModelProperty(value = "联系电话")
     private String number;
 
     @ApiModelProperty(value = "备注")
     private String remarks;
 
-    @ApiModelProperty(value = "是否删除")
+    @ApiModelProperty(value = "是否删除 0未删 1已删")
     private Integer isDel;
-
-
 }

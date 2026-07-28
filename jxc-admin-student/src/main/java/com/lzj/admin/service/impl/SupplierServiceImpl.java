@@ -24,7 +24,62 @@ import java.util.Map;
  * @author TianTian
  * @date 2022/1/19 14:43
  */
-@Service
-public class SupplierServiceImpl extends ServiceImpl<SupplierMapper, Supplier> implements SupplierService {
+
+@Override
+public void saveSupplier(Supplier supplier) {
+
+    AssertUtil.isTrue(supplier == null, "供应商不能为空");
+    AssertUtil.isTrue(StringUtil.isEmpty(supplier.getName()), "供应商名称不能为空");
+
+    QueryWrapper<Supplier> wrapper = new QueryWrapper<>();
+    wrapper.eq("name", supplier.getName());
+
+    Supplier temp = getOne(wrapper);
+
+    AssertUtil.isTrue(temp != null, "供应商已存在");
+
+    supplier.setIsDel(0);
+
+    save(supplier);
+}
+
+@Override
+public void updateSupplier(Supplier supplier) {
+
+    AssertUtil.isTrue(supplier == null, "参数错误");
+    AssertUtil.isTrue(supplier.getId() == null, "ID不能为空");
+
+    Supplier dbSupplier = getById(supplier.getId());
+
+    AssertUtil.isTrue(dbSupplier == null, "供应商不存在");
+
+    updateById(supplier);
+}
+
+@Override
+public Supplier queryById(Integer id) {
+
+    return getById(id);
+}
+
+@Override
+public void deleteSupplier(Integer[] ids) {
+
+    if (ids == null || ids.length == 0) {
+        return;
+    }
+
+    for (Integer id : ids) {
+
+        Supplier supplier = getById(id);
+
+        if (supplier != null) {
+
+            supplier.setIsDel(1);
+
+            updateById(supplier);
+        }
+
+    }
 
 }

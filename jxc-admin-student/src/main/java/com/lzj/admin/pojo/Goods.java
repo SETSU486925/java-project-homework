@@ -17,14 +17,13 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("t_goods")
+@TableName("T_GOODS")
 @ApiModel(value="Goods对象", description="商品表")
 public class Goods implements Serializable {
-
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.INPUT)
     private Integer id;
 
     @ApiModelProperty(value = "商品编码")
@@ -42,7 +41,7 @@ public class Goods implements Serializable {
     @ApiModelProperty(value = "商品名称")
     private String name;
 
-    @ApiModelProperty(value = "生产产商")
+    @ApiModelProperty(value = "生产厂商")
     private String producer;
 
     @ApiModelProperty(value = "采购价格")
@@ -54,33 +53,31 @@ public class Goods implements Serializable {
     @ApiModelProperty(value = "出售价格")
     private Float sellingPrice;
 
-    @ApiModelProperty(value = "商品单位")
+    @ApiModelProperty(value = "商品单位编码")
     private String unit;
 
-    @ApiModelProperty(value = "商品类别")
+    @ApiModelProperty(value = "商品分类ID")
     private Integer typeId;
 
-    //0 初始化状态  1 期初库存入仓库  2 有进货或者销售单据
     @ApiModelProperty(value = "商品状态")
     private Integer state;
 
-    @ApiModelProperty(value = "上次采购价格")
+    @ApiModelProperty(value = "上次采购价")
     private Float lastPurchasingPrice;
 
-    @ApiModelProperty(value = "是否删除")
+    @ApiModelProperty(value = "是否删除 0未删")
     private Integer isDel;
 
-    @ApiModelProperty(value = "是否删除")
+    // 非数据库字段：页面展示单位名称
     @TableField(exist = false)
+    @ApiModelProperty(value = "页面展示单位名")
     private String unitName;
 
-    @ApiModelProperty(value = "是否删除")
+    // 非数据库字段：页面展示分类名称
     @TableField(exist = false)
+    @ApiModelProperty(value = "页面展示分类名")
     private String typeName;
 
-    @ApiModelProperty(value = "销售总数")
     @TableField(exist = false)
     private Integer saleTotal;
-
-
 }

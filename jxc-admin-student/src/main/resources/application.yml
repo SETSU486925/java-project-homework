@@ -5,11 +5,10 @@ server:
 
 spring:
   datasource:
-    # Oracle驱动类
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@127.0.0.1:1521:ORCL
-    username: system
-    password: 123456
+    url: jdbc:oracle:thin:@//localhost:1521/orcl
+    username: root
+    password: 123
     hikari:
       pool-name: DateHikariCP
       minimum-idle: 5
@@ -18,8 +17,8 @@ spring:
       auto-commit: true
       max-lifetime: 1800000
       connection-timeout: 30000
+  
       connection-test-query: SELECT 1 FROM DUAL
-  # freemarker
   freemarker:
     suffix: .ftl
     content-type: text/html
@@ -29,16 +28,12 @@ spring:
     settings:
       number_format: 0.##
 
-
 mybatis-plus:
-  type-aliases-package: com.lzj.admin.**.pojo
-  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.edu.seiryo.**.pojo
+  mapper-locations: classpath:/mybatis/mappers/*.xml
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
-  global-config:
-    db-config:
-      id-type: input
 
 pagehelper:
   helperDialect: oracle
@@ -46,10 +41,10 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
-# 日志配置
+# 日志
 logging:
   level:
     root: info
-    com.lzj.admin.mapper: debug
+    com.edu.seiryo.mapper: debug
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n'

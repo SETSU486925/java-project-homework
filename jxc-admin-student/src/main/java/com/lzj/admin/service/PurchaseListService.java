@@ -10,28 +10,10 @@ import java.util.Map;
 /**
  * 进货单服务接口
  */
+
 public interface PurchaseListService extends IService<PurchaseList> {
     String getNextPurchaseNumber();
-
-    /**
-     * 保存采购单
-     * @param purchaseList 进货单主表
-     * @param goodsList 进货商品明细集合
-     * @param userId 当前登录用户ID
-     */
-    void savePurchaseList(PurchaseList purchaseList,
-                          List<PurchaseListGoods> goodsList,
-                          Integer userId);
-
-    /**
-     * 分页条件查询采购单
-     */
+    void savePurchaseList(PurchaseList purchaseList, List<PurchaseListGoods> goodsList, Integer userId);
     Map<String,Object> queryPurchaseList(PurchaseListQuery query);
-
-    /**
-     * 删除
-     */
     void deletePurchaseList(Integer id);
-
-	void savePurchaseList(PurchaseList purchaseList, List<PurchaseListGoods> goodsList, String userName);
 }

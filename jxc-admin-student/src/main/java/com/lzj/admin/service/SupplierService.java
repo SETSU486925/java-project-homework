@@ -6,11 +6,31 @@ import com.lzj.admin.query.SupplierQuery;
 
 import java.util.Map;
 
-/**
- * 供应商服务类
- * @author TianTian
- * @date 2022/1/19 13:59
- */
 public interface SupplierService extends IService<Supplier> {
+
+    /**
+     * 分页查询
+     */
+    Map<String,Object> supplierList(SupplierQuery supplierQuery);
+
+    /**
+     * 新增供应商
+     */
+    void saveSupplier(Supplier supplier);
+
+    /**
+     * 修改供应商
+     */
+    void updateSupplier(Supplier supplier);
+
+    /**
+     * 根据ID查询
+     */
+    Supplier queryById(Integer id);
+
+    /**
+     * 删除供应商
+     */
+    void deleteSupplier(Integer[] ids);
 
 }

@@ -13,15 +13,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @date 2026/7/23
  */
 @SpringBootApplication
-@EnableTransactionManagement
-@MapperScan(basePackages = "com.lzj.admin.mapper")
+@MapperScan(basePackages = {"com.edu.seiryo.**.mapper"})
 public class JxcAdminApplication {
+ public static void main(String[] args) {
+     SpringApplication.run(JxcAdminApplication.class,args);
+ }
 
-    public static void main(String[] args) {
-        SpringApplication.run(JxcAdminApplication.class, args);
-    }
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+ @Bean
+ public BCryptPasswordEncoder bCryptPasswordEncoder(){
+     return new BCryptPasswordEncoder();
+ }
 }
