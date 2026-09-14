@@ -50,4 +50,9 @@ public class Setmeal implements Serializable {
     
     // 修改人
     private Long updateUser;
+
+	public void setCategoryId(Long categoryId2) {
+		// TODO Auto-generated method stub
+		
+	}
 }
