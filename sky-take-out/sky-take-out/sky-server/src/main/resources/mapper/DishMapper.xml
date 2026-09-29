@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.DishMapper">
+
+	<!-- 菜品分页查询 -->
+	<select id="pageQuery" resultType="com.sky.vo.DishVO">
+		select
+		dish.id,
+		dish.name,
+		dish.category_id,
+		dish.price,
+		dish.image,
+		dish.description,
+		dish.status,
+		dish.create_time,
+		dish.update_time,
+		dish.create_user,
+		dish.update_user,
+		category.name as category_name
+		from dish
+		left join category on dish.category_id =
+		category.id
+		<where>
+			<if test="name != null and name != ''">
+				and dish.name like '%' || #{name} || '%'
+			</if>
+			<if test="categoryId != null">
+				and dish.category_id = #{categoryId}
+			</if>
+			<if test="status != null">
+				and dish.status = #{status}
+			</if>
+		</where>
+		order by dish.update_time desc
+	</select>
+
+	<!-- 根据id动态修改菜品 -->
+	<update id="update">
+		update dish
+		<set>
+			<if test="name != null">name = #{name},</if>
+			<if test="categoryId != null">category_id = #{categoryId},</if>
+			<if test="price != null">price = #{price},</if>
+			<if test="image != null">image = #{image},</if>
+			<if test="description != null">description = #{description},</if>
+			<if test="status != null">status = #{status},</if>
+			<if test="updateTime != null">update_time = #{updateTime},</if>
+			<if test="updateUser != null">update_user = #{updateUser}</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!-- 插入菜品数据（Oracle支持主键回显） -->
+	<insert id="insert">
+		<selectKey keyProperty="id" resultType="java.lang.Long"
+			order="BEFORE">
+			select dish_seq.nextval from dual
+		</selectKey>
+		insert into dish (id, name, category_id, price, image, description,
+		status, create_time, update_time, create_user, update_user)
+		values
+		(#{id}, #{name}, #{categoryId}, #{price}, #{image}, #{description},
+		#{status}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+	</insert>
+
+	<!-- 根据条件查询菜品 -->
+	<select id="list" resultType="com.sky.vo.DishVO">
+		select
+		dish.id,
+		dish.name,
+		dish.category_id,
+		dish.price,
+		dish.image,
+		dish.description,
+		dish.status,
+		dish.create_time,
+		dish.update_time,
+		dish.create_user,
+		dish.update_user,
+		category.name as category_name
+		from dish
+		left join category on dish.category_id = category.id
+		<where>
+			<if test="categoryId != null">
+				and dish.category_id = #{categoryId}
+			</if>
+			<if test="status != null">
+				and dish.status = #{status}
+			</if>
+		</where>
+		order by dish.update_time desc
+	</select>
+
+
+</mapper>
